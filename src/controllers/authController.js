@@ -8,11 +8,11 @@ export async function signUp (req, res) {
     console.log(req.password)
     try{
                          
-        const userExiste = await usersCollection.findOne({name});
+        // const userExiste = await usersCollection.findOne({name});
         const emailExiste = await usersCollection.findOne({email});
 
-        if(userExiste || emailExiste){
-            res.status(409).send({message:"Usuario ja existe"})
+        if(emailExiste){
+            res.status(409).send({message:"Email já existe"})
             return;
           }
         
