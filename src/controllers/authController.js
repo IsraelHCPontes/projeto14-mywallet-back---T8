@@ -1,22 +1,18 @@
-import {usersCollection} from '../database/db.js'
+import {usersCollection, sessionsCollection} from '../database/db.js'
+import bcrypt from 'bcrypt';
 
 export async function signUp (req, res) {
-  
-    const {name, email} = req.body;
-    console.log('to no controller', req.body)
+    const user = req.body;
+    const passwordHash =  bcrypt.hashSync(user.password, 10)
+    const newBody = {
+        name: user.name,
+        email: user.email,
+        password: passwordHash
+       }
 
-    console.log(req.password)
-    try{
-                         
-        // const userExiste = await usersCollection.findOne({name});
-        const emailExiste = await usersCollection.findOne({email});
-
-        if(emailExiste){
-            res.status(409).send({message:"Email já existe"})
-            return;
-          }
+    try{                
         
-         await usersCollection.insertOne(req.body)   
+        await usersCollection.insertOne(newBody)   
 
         res.sendStatus(201);
     }catch(err){
@@ -25,8 +21,11 @@ export async function signUp (req, res) {
 }
 
 export  async function signIn(req, res) {
+    const {password, email} = req.body
+
     try{
-        const entradas = await db.collection('entradas').find().toArray()
+        const nameAlready = await usersCollection.findOne({email});
+
         res.status(200).send(entradas)
     }catch(err){
         res.status(500).send(err.message)
