@@ -1,22 +1,18 @@
-import express, { query } from 'express';
+import express from 'express';
 import cors from "cors";
-import { MongoClient, ObjectId  } from "mongodb";
 import dotenv from 'dotenv';
-import {signUp, signIn} from './controllers/authController.js'
+import authRouter from './routers/authRouter.js'
+
+
 
 
 //Config
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(authRouter);
 dotenv.config();
 
-
-
-
-app.post("/sign-up", signUp) 
-
-app.get("/sign-in", signIn)
 
 
 app.listen(process.env.PORT,() => 
