@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import authRouter from './routers/authRouter.js'
 
 
-
-
 //Config
 const app = express();
 app.use(cors());

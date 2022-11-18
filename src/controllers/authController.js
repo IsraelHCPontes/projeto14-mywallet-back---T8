@@ -3,7 +3,9 @@ import {usersCollection} from '../database/db.js'
 export async function signUp (req, res) {
   
     const {name, email} = req.body;
+    console.log('to no controller', req.body)
 
+    console.log(req.password)
     try{
                          
         const userExiste = await usersCollection.findOne({name});
@@ -19,8 +21,6 @@ export async function signUp (req, res) {
         res.sendStatus(201);
     }catch(err){
         res.status(422).send(err)
-        console.log(usersCollection)
-        
     }   
 }
 
