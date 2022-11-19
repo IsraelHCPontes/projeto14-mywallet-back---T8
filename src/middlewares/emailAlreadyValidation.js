@@ -8,13 +8,13 @@ export async function emailAlreadyValidation(req, res, next){
         const emailExiste = await usersCollection.findOne({email});
 
         if(emailExiste){
-            res.status(409).send({message:"Email já existe"})
+            res.status(409).send({message:"Email já existe"});
             return;
           }
           
-        next()  
+        next();
         
     }catch(err){
-        res.status(402).send(err)
+        res.status(402).send(err);
     }   
 }
