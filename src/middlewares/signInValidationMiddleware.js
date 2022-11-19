@@ -19,7 +19,7 @@ export async function signInValidationMiddleware(req, res, next){
         res.locals.user = userAready;
         next();
        }else{
-        res.status(401).send({message:'Senha incorreta'})
+        res.status(401).send({message:'Email ou Senha incorreto'})
         return;
        }
     }catch(err){

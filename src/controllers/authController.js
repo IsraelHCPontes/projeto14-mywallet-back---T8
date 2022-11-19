@@ -42,6 +42,6 @@ export  async function signIn(req, res) {
         await sessionsCollection.insertOne(newSession);
         res.status(201).send({token: token});
     }catch(err){
-        res.status(500).send(err.message);
+        res.status(500).send(err);
     }
 }
