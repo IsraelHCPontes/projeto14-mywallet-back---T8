@@ -40,7 +40,7 @@ export  async function signIn(req, res) {
             await sessionsCollection.deleteOne({userId: user._id});
         }
         await sessionsCollection.insertOne(newSession);
-        res.status(201).send({token: token});
+        res.status(201).send({token: token, name: user.name});
     }catch(err){
         res.status(500).send(err);
     }
