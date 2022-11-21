@@ -1,10 +1,9 @@
-import { number } from 'joi';
 import connectMongoDB from '../database/db.js'
 
 
 export async function getTransactions(req, res){
     const {user} = res.locals;
-    let saldo = number;
+    let saldo;
 
     function creatPackage({valor, type, title,date},name){
         if(type === "+"){
