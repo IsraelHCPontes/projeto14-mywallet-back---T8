@@ -36,7 +36,7 @@ export  async function signIn(req, res) {
     try{
         const { db } = await connectMongoDB();
         
-        const sessionAlready = await  db.collection("sessions").insertOne(newBody).findOne({userId: user._id});
+        const sessionAlready = await  db.collection("sessions").findOne({userId: user._id});
 
         if(sessionAlready){
             await  db.collection("sessions").deleteOne({userId: user._id});
@@ -44,6 +44,7 @@ export  async function signIn(req, res) {
         await  db.collection("sessions").insertOne(newSession);
         res.status(201).send({token: token, name: user.name});
     }catch(err){
+        console.log(err)
         res.status(500).send(err);
     }
 }
