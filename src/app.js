@@ -13,7 +13,8 @@ app.use(authRouter);
 app.use(userRouter);
 dotenv.config();
 
+const port = process.env.PORT || 5001
 
-
-app.listen(process.env.PORT,() => 
-console.log(`Escutando na porta ${process.env.PORT}`));
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
