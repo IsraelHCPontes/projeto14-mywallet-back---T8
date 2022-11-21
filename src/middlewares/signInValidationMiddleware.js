@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 export async function signInValidationMiddleware(req, res, next){
     const user = req.body;
     const validation = signInSchema.validate(user, {abortEarly: false});
-    console.log('paeei no mid')
     if(validation.error){
         const erros = validation.error.details.map(detail => detail);
         res.status(409).send(erros);
@@ -23,6 +22,6 @@ export async function signInValidationMiddleware(req, res, next){
         return;
        }
     }catch(err){
-        res.status(500).send({message: 'Deu ero no Midd'})
+        res.status(500).send({message: 'Deu erro no Midd'})
     }
 };
