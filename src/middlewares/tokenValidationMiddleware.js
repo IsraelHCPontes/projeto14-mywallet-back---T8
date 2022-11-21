@@ -19,5 +19,5 @@ export async function tokenValidation(req, res, next){
     res.locals.user = user;
     next();
   }catch({response}){
-    console.log(response.data.error)
+    console.log(response)
   }}
