@@ -1,4 +1,4 @@
-import {transactionsCollection, usersCollection} from '../database/db.js';
+import connectMongoDB from '../database/db.js'
 
 
 export async function getTransactions(req, res){
@@ -24,9 +24,11 @@ export async function getTransactions(req, res){
 
 
     try{
-        const transactions = await transactionsCollection.find({userId: user._id}).toArray();
+        const { db } = await connectMongoDB();
         
-        const {name} = await usersCollection.findOne({_id: transactions[0].userId}) 
+        const transactions = await  db.collection("transactions").find({userId: user._id}).toArray();
+        
+        const {name} =  await  db.collection("users").findOne({_id: transactions[0].userId}) 
 
         const transPackage = transactions.map((trans) => creatPackage(trans, name) )
         console.log(transPackage)
@@ -53,7 +55,8 @@ export async function postNewTransaction(req, res){
         date: hoje.toLocaleDateString("pt-br")
     }
     try{
-       await transactionsCollection.insertOne(transPackage)
+        const { db } = await connectMongoDB();
+        await  db.collection("transactions").insertOne(transPackage)
        res.sendStatus(201)
     }catch(error){
         res.status(500).send(error)

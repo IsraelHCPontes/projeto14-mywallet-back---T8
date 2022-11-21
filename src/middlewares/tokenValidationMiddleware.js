@@ -1,22 +1,23 @@
-import {sessionsCollection, usersCollection} from '../database/db.js'
+import connectMongoDB from '../database/db.js'
 
 export async function tokenValidation(req, res, next){
   const {authorization} = req.headers;
   const token = authorization?.replace('Bearer ', ''); 
 
   try{
-    const session = await sessionsCollection.findOne({token})
+    const {db} = await connectMongoDB();
+    const session = await  db.collection("sessions").findOne({token})
     if(!session){
         res.sendStatus(401);
         return;
     }
-    const user = await usersCollection.findOne({_id: session.userId });
+    const user = await  db.collection("users").findOne({_id: session.userId });
     if(!user){
         res.sendStatus(401);
         return;
     }
     res.locals.user = user;
     next();
-  }catch(error){
-    console.log(error)
+  }catch({response}){
+    console.log(response.data.error)
   }}

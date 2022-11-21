@@ -1,4 +1,4 @@
-import {usersCollection, sessionsCollection} from '../database/db.js'
+import connectMongoDB from '../database/db.js'
 import bcrypt from 'bcrypt';
 import {v4 as uuid} from 'uuid';
 
@@ -14,8 +14,8 @@ export async function signUp (req, res) {
        }
 
     try{                
-        
-        await usersCollection.insertOne(newBody); 
+        const { db } = await connectMongoDB();
+        await  db.collection("users").insertOne(newBody); 
 
         res.sendStatus(201);
     }catch(err){
@@ -34,12 +34,14 @@ export  async function signIn(req, res) {
     console.log(user, token);
     
     try{
-        const sessionAlready = await sessionsCollection.findOne({userId: user._id});
+        const { db } = await connectMongoDB();
+        
+        const sessionAlready = await  db.collection("sessions").insertOne(newBody).findOne({userId: user._id});
 
         if(sessionAlready){
-            await sessionsCollection.deleteOne({userId: user._id});
+            await  db.collection("sessions").deleteOne({userId: user._id});
         }
-        await sessionsCollection.insertOne(newSession);
+        await  db.collection("sessions").insertOne(newSession);
         res.status(201).send({token: token, name: user.name});
     }catch(err){
         res.status(500).send(err);

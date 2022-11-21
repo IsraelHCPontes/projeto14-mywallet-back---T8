@@ -1,5 +1,5 @@
 import  signInSchema from '../schemas/signInSchema.js';
-import { usersCollection } from '../database/db.js';
+import connectMongoDB from '../database/db.js';
 import bcrypt from 'bcrypt';
 
 export async function signInValidationMiddleware(req, res, next){
@@ -12,7 +12,9 @@ export async function signInValidationMiddleware(req, res, next){
     } 
 
     try{
-       const userAready = await usersCollection.findOne({email:user.email})
+        const {db} = await connectMongoDB();
+       
+       const userAready =  await  db.collection("users").findOne({email:user.email})
        if(userAready && bcrypt.compareSync(user.password, userAready.password)){
         delete userAready.password
         res.locals.user = userAready;
