@@ -12,6 +12,7 @@ try{
     console.log(err);
 }
 }
+dataBase()
 
 const usersCollection = db.collection('users');
 const sessionsCollection = db.collection('sessions');
