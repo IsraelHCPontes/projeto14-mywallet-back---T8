@@ -3,24 +3,23 @@ import dotenv from 'dotenv';
 dotenv.config();
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 let db;
-let usersCollection 
-let sessionsCollection 
-let transactionsCollection 
+// let usersCollection 
+// let sessionsCollection 
+// let transactionsCollection 
 
-async function dataBase(){
-try{
-    await mongoClient.connect();
-    db =  mongoClient.db("myWallet");
-    usersCollection = db.collection('users');
-    sessionsCollection = db.collection('sessions');
-    transactionsCollection = db.collection('transactions');
-}catch(err){
-    console.log(err);
-    }
-}
-dataBase()
+
+try {
+    const res = await mongoClient.connect();
+  } catch (error) {
+    console.log(error);
+  }
+  
+  db = mongoClient.db('mywalley');
 
 
 
-export{usersCollection, sessionsCollection, transactionsCollection}
+export const usersCollection = db.collection('users');
+export const  sessionsCollection = db.collection('sessions');
+export const transactionsCollection = db.collection('transactions');
+
 
