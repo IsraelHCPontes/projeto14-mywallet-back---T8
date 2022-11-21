@@ -1,4 +1,4 @@
-import connect from "../database/db.js";
+import connectMongoDB from "../database/db.js";
 
 export async function emailAlreadyValidation(req, res, next){
     const {email} = req.body;
