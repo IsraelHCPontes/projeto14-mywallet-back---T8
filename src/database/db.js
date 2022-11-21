@@ -3,11 +3,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 let db;
+
+async function dataBase(){
 try{
     await mongoClient.connect();
     db =  mongoClient.db("myWallet");
 }catch(err){
     console.log(err);
+}
 }
 
 const usersCollection = db.collection('users');
