@@ -16,7 +16,7 @@ export async function getTransactions(req, res){
             valor,
             type,
             date,
-            name:name,
+            name,
             saldo: saldo
         }
         return transPackage
