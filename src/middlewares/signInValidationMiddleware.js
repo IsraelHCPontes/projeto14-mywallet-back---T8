@@ -22,6 +22,7 @@ export async function signInValidationMiddleware(req, res, next){
         return;
        }
     }catch(err){
+        console.log(err)
         res.status(500).send({message: 'Deu erro no Midd'})
     }
 };
