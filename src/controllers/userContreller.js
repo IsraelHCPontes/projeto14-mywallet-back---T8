@@ -3,7 +3,7 @@ import connectMongoDB from '../database/db.js'
 
 export async function getTransactions(req, res){
     const {user} = res.locals;
-    let saldo = Number(0);
+    let saldo = Number();
  
     function creatPackage({valor, type, title,date},name){
         if(type === "+"){
